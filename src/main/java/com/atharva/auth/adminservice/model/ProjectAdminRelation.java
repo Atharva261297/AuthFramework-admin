@@ -5,23 +5,22 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "relation", schema = "project")
-public class ProjectAdminRelation {
+public class ProjectAdminRelation implements Serializable {
 
     @Id
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "project_id", referencedColumnName = "id")
-    private ProjectModel project;
+    @Column(name = "project_id")
+    private String projectId;
 
     @Id
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "admin_id", referencedColumnName = "id")
-    private AdminModel admin;
+    @Column(name = "admin_id")
+    private String adminId;
 
     @Column(name = "rights")
     private AdminRights rights;

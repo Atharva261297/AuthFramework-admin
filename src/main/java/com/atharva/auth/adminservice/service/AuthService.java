@@ -6,8 +6,10 @@ import com.atharva.auth.adminservice.model.AdminModel;
 import com.atharva.auth.adminservice.utils.constants.ErrorCodes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Service
+@EnableTransactionManagement
 public class AuthService {
 
     @Autowired
