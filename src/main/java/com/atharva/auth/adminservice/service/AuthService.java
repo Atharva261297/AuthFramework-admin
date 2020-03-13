@@ -26,4 +26,8 @@ public class AuthService {
             return registerCode;
         }
     }
+
+    public ErrorCodes verify(String auth) {
+        return client.login(auth);
+    }
 }

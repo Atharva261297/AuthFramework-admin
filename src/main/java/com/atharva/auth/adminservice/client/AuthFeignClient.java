@@ -11,4 +11,10 @@ public interface AuthFeignClient {
 
     @RequestMapping(method = RequestMethod.GET, value = "/auth/register")
     ErrorCodes register(@RequestHeader String auth);
+
+    @RequestMapping(method = RequestMethod.GET, value = "/auth/admin/login")
+    ErrorCodes login(@RequestHeader String auth);
+
+    @RequestMapping(method = RequestMethod.GET, value = "/project/register")
+    ErrorCodes registerProject(@RequestHeader String auth);
 }
