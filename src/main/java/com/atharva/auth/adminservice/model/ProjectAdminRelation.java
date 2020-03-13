@@ -5,13 +5,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "relation", schema = "project")
-public class ProjectAdminRelation {
+public class ProjectAdminRelation implements Serializable {
 
     @Id
     @Column(name = "project_id")
