@@ -6,6 +6,7 @@ public enum ErrorCodes {
     PASS_INCORRECT(401),
     ID_INCORRECT(402),
     ID_ALREADY_EXITS(403),
+    AUTH_KEY_NOT_VALID(405),
 
     UNKNOWN(500);
 
