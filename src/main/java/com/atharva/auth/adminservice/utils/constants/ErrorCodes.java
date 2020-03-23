@@ -7,6 +7,7 @@ public enum ErrorCodes {
     ID_INCORRECT(402),
     ID_ALREADY_EXITS(403),
     AUTH_KEY_NOT_VALID(405),
+    ACCOUNT_NOT_VERIFIED(406),
 
     UNKNOWN(500);
 

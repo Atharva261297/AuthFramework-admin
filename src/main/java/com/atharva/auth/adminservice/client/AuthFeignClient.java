@@ -17,4 +17,7 @@ public interface AuthFeignClient {
 
     @RequestMapping(method = RequestMethod.GET, value = "/project/register")
     ErrorCodes registerProject(@RequestHeader String auth);
+
+    @RequestMapping(method = RequestMethod.GET, value = "/auth/admin/reset")
+    ErrorCodes resetPassword(@RequestHeader String auth);
 }
