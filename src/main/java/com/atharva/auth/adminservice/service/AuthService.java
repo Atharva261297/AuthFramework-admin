@@ -67,6 +67,12 @@ public class AuthService {
         }
     }
 
+    @Transactional
+    public ErrorCodes adminVerified(String userId) {
+        adminRepository.getOne(userId).setVerified(true);
+        return ErrorCodes.SUCCESS;
+    }
+
     public ErrorCodes resetPassword(String auth) {
         return client.resetPassword(auth);
     }
@@ -83,5 +89,13 @@ public class AuthService {
         String key = UUID.randomUUID().toString();
         authKeys.put(userId, key);
         return key;
+    }
+
+    public ErrorCodes sendResetPasswordMail(String id) {
+        if (adminRepository.existsById(id)) {
+            return emailClient.sendResetPassword(adminRepository.getOne(id).getEmail(), id, projectName);
+        } else {
+            return ErrorCodes.ID_INCORRECT;
+        }
     }
 }

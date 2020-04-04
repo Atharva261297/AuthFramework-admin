@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.thymeleaf.org ">
+<head>
+    <meta charset="UTF-8">
+    <title>Auth Framework</title>
+    <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+    <!--     Fonts and icons     -->
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+</head>
+<body>
+
+    <div class="container col-sm-4 shadow" 
+        style="margin-top: 10%;
+                padding-top: 10px; 
+                padding-bottom: 10px; 
+                background-color: #e6e6e6;">
+        
+        <div class="row m-0 p-3 justify-content-center shadow" style="background-color: #a142b3;">
+            <div class="text-center">
+                <h4 style="color: whitesmoke;">Auth Framework</h4>
+            </div>
+        </div>
+
+        <form action="#" th:action="@{/reset-result}" th:object="${loginModel}" method="post">
+            <div class="row mt-3 p-2 justify-content-center">
+                <div class="text-center">
+                    <input type="text" class="form-control" id="id" placeholder="Admin Id" th:field="*{id}">
+                </div>
+            </div>
+    
+            <div class="row pt-3 pb-1 justify-content-center">
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary btn-raised shadow" style="background-color: #a142b3; color: whitesmoke;">
+                        Reset
+                    </button>
+                </div>
+            </div>
+        </form>
+
+        <div class="row pb-2 justify-content-center">
+            <div class="text-center">
+                <a href="/login" style="font-size: smaller;">Login</a> <br>
+            </div>
+        </div>
+
+        <div class="row p-1 justify-content-center">
+            <div class="text-center">
+                <p style=" color: red;" th:switch="${error}">
+                    <span th:case="'NULL_ERROR'">Admin Id is empty</span>
+                    <span th:case="'ID_INCORRECT'">Incorrect Admin Id</span>
+                </p>
+            </div>
+        </div>
+    
+    </div>
+
+</body>
+</html>

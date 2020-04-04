@@ -28,9 +28,13 @@ public class AuthController {
         return ErrorCodes.SUCCESS;
     }
 
-    @GetMapping("/reset")
-    public ErrorCodes register(@RequestHeader String admin_auth) {
-//        log.debug("Reset : " + );
+    @PostMapping("/reset")
+    public ErrorCodes reset(@RequestHeader String admin_auth) {
         return authService.resetPassword(admin_auth);
+    }
+
+    @GetMapping("/verify/{userId}")
+    public ErrorCodes emailVerified(@PathVariable(name = "userId") String userId) {
+        return authService.adminVerified(userId);
     }
 }

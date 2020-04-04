@@ -9,15 +9,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @FeignClient(value = "AuthClient", url = "${url.auth}")
 public interface AuthFeignClient {
 
-    @RequestMapping(method = RequestMethod.GET, value = "/auth/register")
+    @RequestMapping(method = RequestMethod.POST, value = "/register")
     ErrorCodes register(@RequestHeader String auth);
 
-    @RequestMapping(method = RequestMethod.GET, value = "/auth/admin/login")
+    @RequestMapping(method = RequestMethod.POST, value = "/login")
     ErrorCodes login(@RequestHeader String auth);
 
-    @RequestMapping(method = RequestMethod.GET, value = "/project/register")
-    ErrorCodes registerProject(@RequestHeader String auth);
-
-    @RequestMapping(method = RequestMethod.GET, value = "/auth/admin/reset")
+    @RequestMapping(method = RequestMethod.POST, value = "/reset")
     ErrorCodes resetPassword(@RequestHeader String auth);
 }

@@ -22,4 +22,7 @@ public class ProjectModel {
     @Column(name = "owner_id")
     private String ownerId;
 
+    @Column(name = "user_size")
+    private Integer userSize;
+
 }

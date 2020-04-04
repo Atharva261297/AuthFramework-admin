@@ -13,4 +13,8 @@ public interface EmailFeignClient {
     ErrorCodes senVerificationEmail(@PathVariable(name = "email") String email, @PathVariable(name = "userId") String userId,
                                     @PathVariable(name = "projectName") String projectName);
 
+    @RequestMapping(method = RequestMethod.GET, value = "/admin/reset-password/{email}/{userId}/{projectName}")
+    public ErrorCodes sendResetPassword(@PathVariable(name = "email") String email, @PathVariable(name = "userId") String userId,
+                                         @PathVariable(name = "projectName") String projectName);
+
 }

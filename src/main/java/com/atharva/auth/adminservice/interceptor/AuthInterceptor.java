@@ -55,7 +55,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
         return code;
     }
 
-    private ErrorCodes verifyAuthKeyFromCookies(Cookie[] cookies) {
+    public ErrorCodes verifyAuthKeyFromCookies(Cookie[] cookies) {
         String cookieUserIdValue = StringUtils.EMPTY;
         String cookieKeyValue = StringUtils.EMPTY;
         if (Objects.nonNull(cookies)) {
