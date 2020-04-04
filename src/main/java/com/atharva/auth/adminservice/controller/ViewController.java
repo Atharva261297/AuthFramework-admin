@@ -144,7 +144,7 @@ public class ViewController {
                                             @CookieValue(name = "auth.key", required = false) String cookieValue,
                                             @ModelAttribute ProjectModel newProject, RedirectAttributes attributes) {
 
-//        if (auth.verify(id, key) == ErrorCodes.SUCCESS) {
+        if (auth.verify(cookieId, cookieValue) == ErrorCodes.SUCCESS) {
             if (newProject != null && newProject.getId() != null && newProject.getName()!= null) {
                 newProject.setOwnerId(new String(Base64.getDecoder().decode(cookieId.getBytes())));
                 newProject.setUserSize(0);
@@ -154,24 +154,24 @@ public class ViewController {
                 attributes.addFlashAttribute("alert", "NULL_ERROR");
             }
             return new RedirectView("projects");
-//         } else {
-//            return "redirect:/login";
-//        }
+         } else {
+            return new RedirectView("login");
+        }
     }
 
     @RequestMapping("/project-details/{projectId}")
     public String getProjectDetails(@CookieValue(name = "auth.userId", required = false) String cookieId,
                                     @CookieValue(name = "auth.key", required = false) String cookieValue,
                                     @PathVariable(name = "projectId") String projectId, Model model) {
-//        if (auth.verify(id, key) == ErrorCodes.SUCCESS) {
+        if (auth.verify(cookieId, cookieValue) == ErrorCodes.SUCCESS) {
             ProjectDetailModel projectDetails = projectService.getProjectDetails(projectId, new String(Base64.getDecoder().decode(cookieId.getBytes())));
             model.addAttribute("prj", projectDetails);
             model.addAttribute("updatedPrj", projectDetails.getProjectModel());
             model.addAttribute("newAdmin", new ProjectAdminsModel());
             return "project-details";
-//        } else {
-//            return "redirect:/login";
-//        }
+        } else {
+            return "redirect:/login";
+        }
     }
 
     @PostMapping("/update-project-result")
@@ -179,16 +179,16 @@ public class ViewController {
                                             @CookieValue(name = "auth.key", required = false) String cookieValue,
                                             @ModelAttribute ProjectModel updatedPrj) {
 
-//        if (auth.verify(id, key) == ErrorCodes.SUCCESS) {
+        if (auth.verify(cookieId, cookieValue) == ErrorCodes.SUCCESS) {
 //        if (!updatedPrj.getName().isEmpty() && !updatedPrj.getOwnerId().isEmpty()) {
             projectService.updateProject(updatedPrj);
 //        } else {
 //            attributes.addFlashAttribute("alert", "NULL_ERROR");
 //        }
         return "redirect:/project-details/" + updatedPrj.getId();
-//         } else {
-//            return "redirect:/login";
-//        }
+         } else {
+            return "redirect:/login";
+        }
     }
 
     @PostMapping("/add-admin-result/{projectId}")
@@ -196,17 +196,16 @@ public class ViewController {
                                  @CookieValue(name = "auth.key", required = false) String cookieValue,
                                  @PathVariable(name = "projectId") String projectId,
                                  @ModelAttribute ProjectAdminsModel newAdmin) {
-
-//        if (auth.verify(id, key) == ErrorCodes.SUCCESS) {
+        if (auth.verify(cookieId, cookieValue) == ErrorCodes.SUCCESS) {
 //        if (!updatedPrj.getName().isEmpty() && !updatedPrj.getOwnerId().isEmpty()) {
-        projectService.addAdmin(newAdmin, projectId);
+            projectService.addAdmin(newAdmin, projectId);
 //        } else {
 //            attributes.addFlashAttribute("alert", "NULL_ERROR");
 //        }
-        return "redirect:/project-details/" + projectId;
-//         } else {
-//            return "redirect:/login";
-//        }
+            return "redirect:/project-details/" + projectId;
+         } else {
+            return "redirect:/login";
+        }
     }
 
     @RequestMapping("/change-rights/READ/{adminId}/{projectId}")
@@ -214,9 +213,12 @@ public class ViewController {
                                @CookieValue(name = "auth.key", required = false) String cookieValue,
                                @PathVariable(name = "projectId") String projectId,
                                @PathVariable(name = "adminId") String adminId) {
-
-        projectService.updateAdmin(adminId, projectId, AdminRights.READ);
-        return "redirect:/project-details/" + projectId;
+        if (auth.verify(cookieId, cookieValue) == ErrorCodes.SUCCESS) {
+            projectService.updateAdmin(adminId, projectId, AdminRights.READ);
+            return "redirect:/project-details/" + projectId;
+        } else {
+            return "redirect:/login";
+        }
     }
 
     @RequestMapping("/change-rights/WRITE/{adminId}/{projectId}")
@@ -224,9 +226,12 @@ public class ViewController {
                                @CookieValue(name = "auth.key", required = false) String cookieValue,
                                @PathVariable(name = "projectId") String projectId,
                                @PathVariable(name = "adminId") String adminId) {
-
-        projectService.updateAdmin(adminId, projectId, AdminRights.WRITE);
-        return "redirect:/project-details/" + projectId;
+        if (auth.verify(cookieId, cookieValue) == ErrorCodes.SUCCESS) {
+            projectService.updateAdmin(adminId, projectId, AdminRights.WRITE);
+            return "redirect:/project-details/" + projectId;
+        } else {
+            return "redirect:/login";
+        }
     }
 
     @RequestMapping("/delete-admin/{adminId}/{projectId}")
@@ -234,19 +239,25 @@ public class ViewController {
                                @CookieValue(name = "auth.key", required = false) String cookieValue,
                                @PathVariable(name = "projectId") String projectId,
                                @PathVariable(name = "adminId") String adminId) {
-
-        projectService.deleteAdmin(adminId, projectId);
-        return "redirect:/project-details/" + projectId;
+        if (auth.verify(cookieId, cookieValue) == ErrorCodes.SUCCESS) {
+            projectService.deleteAdmin(adminId, projectId);
+            return "redirect:/project-details/" + projectId;
+        } else {
+            return "redirect:/login";
+        }
     }
 
     @RequestMapping("/account-details/{adminId}")
     public String accountDetails(@CookieValue(name = "auth.userId", required = false) String cookieId,
                               @CookieValue(name = "auth.key", required = false) String cookieValue,
                               @PathVariable(name = "adminId") String adminId, Model model) {
-
-        AdminModel details = adminService.getDetails(adminId);
-        model.addAttribute("admin", details);
-        return "account-details";
+        if (auth.verify(cookieId, cookieValue) == ErrorCodes.SUCCESS) {
+            AdminModel details = adminService.getDetails(adminId);
+            model.addAttribute("admin", details);
+            return "account-details";
+        } else {
+            return "redirect:/login";
+        }
     }
 
     @RequestMapping("/logout")
