@@ -111,6 +111,13 @@ public class ProjectService {
     }
 
     @Transactional
+    public void updateUserCount(String projectId, int count) {
+        ProjectModel fromDb = projectDao.getOne(projectId);
+        fromDb.setUserSize(fromDb.getUserSize() + count);
+        projectDao.save(fromDb);
+    }
+
+    @Transactional
     public void addAdmin(ProjectAdminsModel newAdmin, String projectId) {
         relationDao.save(new ProjectAdminRelation(projectId, newAdmin.getId(), newAdmin.getRights()));
     }
